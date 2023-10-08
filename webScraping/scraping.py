@@ -209,7 +209,7 @@ csv_file = "wine_data.csv"
 
 with open(csv_file, "w", newline="", encoding="utf-8") as file:
     writer = csv.writer(file)
-    writer.writerow(["name", "date", "producer", "region", "type_and_color", "grapes", "price", "ratings", "review", "reviewer", "reviewer_info"])
+    writer.writerow(["name", "date", "winery", "region", "type_and_color", "primary_grape", "price", "score", "review", "reviewer", "reviewer_info"])
     writer.writerows(data)
 
 print("Data has been saved to", csv_file)

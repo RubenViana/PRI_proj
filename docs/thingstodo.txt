@@ -1,0 +1,36 @@
+Possible searches:
+Search wines by name, vintage, winery, region, type, primary grape, reviewer
+Search wines by price range, score range
+Search wines by aroma
+Search wines by flavour 
+Search wines by finish
+Search wines by number of cases made
+Search wines by drink through data range
+Search wines by information about the reviewer (when he entered the department, role, when he acquired that role, etc.)
+Search a non-vintage wine(Maybe this can be a search in unstructured text, because you need to extract the "NV" from the full name)
+(Return the most well ranked wineries)?
+(Return the most well ranked regions)?
+(Search wines by review length)?
+
+
+ideas of things to clean in the dataset:
+eliminate wines with null price: 3rd- done
+normalize wine prices (some have something like $10/250ml): 2nd- done
+eliminate wines which reviews have less than x words: 1st- done
+(substitute the null values in the primary grape column by : 4th)?- done
+remove () from the dates of non-vintage wines: 5th- done
+normalize region column: 6th
+
+put constraints in the UML- done
+
+
+don't forget to change the column names in both the database and the code (both in the notebook and in the scraping script)- done
+
+When talking about data preparation in the report, specifically about the normalization of prices, refer to this link: 
+https://www.winespectator.com/articles/is-the-price-listed-on-wine-reviews-the-retail-price
+
+Maybe point this in the report, with this link to prove it (https://www.winespectator.com/articles/non-vintage-date-wine-55091):
+Second of all, we observed that some wines have the abbreviation "NV" in their names, which stands for "No Vintage". 
+This wines didn't have a vintage date (date in which the grapes are collected), as they are non-vintage wines. 
+So, this date was substituted by the date in which it was tasted
+
