@@ -4,13 +4,19 @@ import matplotlib.pyplot as plt
 dataset = pd.read_csv('src/updated_dataset.csv')
 
 def bar_graph(ds, title, xlabel, ylabel):
+    # Sort the data series in descending order
+    ds_sorted = ds.sort_values(ascending=False)
 
-    graph = ds.plot(kind='bar')
+    # Select the top 20 values
+    ds_top20 = ds_sorted.head(20)
+
+    # Create the bar graph
+    graph = ds_top20.plot(kind='bar')
 
     # Add number to the top of the bar
     bars = graph.patches
-    for bar, num in zip(bars, ds):
-        graph.text(bar.get_x() + bar.get_width()/2, bar.get_height()+5, num, ha='center')
+    for bar, num in zip(bars, ds_top20):
+        graph.text(bar.get_x() + bar.get_width()/2, bar.get_height()+1, round(num), ha='center')
 
     plt.title(title)
     plt.xlabel(xlabel)
