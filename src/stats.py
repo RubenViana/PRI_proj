@@ -3,12 +3,12 @@ import matplotlib.pyplot as plt
 
 dataset = pd.read_csv('src/updated_dataset.csv')
 
-def bar_graph(ds, title, xlabel, ylabel):
-    # Sort the data series in descending order
-    ds_sorted = ds.sort_values(ascending=False)
-
-    # Select the top 20 values
-    ds_top20 = ds_sorted.head(20)
+def bar_graph(ds, title, xlabel, ylabel, sort):
+    
+    if sort:
+        ds_top20 = ds.sort_values(ascending=False).head(20)
+    else:
+        ds_top20 = ds.head(20)
 
     # Create the bar graph
     graph = ds_top20.plot(kind='bar')
@@ -79,19 +79,19 @@ print("\n4. Reviewers per number of reviews:")
 print(reviewers_per_number_of_reviews)
 
 # Plot the results
-bar_graph(wine_count_by_type, 'Number of wines per type', 'Type', 'Number')
-bar_graph(wine_count_by_region, 'Number of wines per region', 'Region', 'Number')
-bar_graph(wine_count_by_winery, 'Number of wines per winery', 'Winery', 'Number')
-bar_graph(wines_per_price_range, 'Number of wines per price range', 'Price', 'Number')
-bar_graph(wines_per_score, 'Number of wines per score', 'Score', 'Number')
+bar_graph(wine_count_by_type, 'Number of wines per type', 'Type', 'Number', False)
+bar_graph(wine_count_by_region, 'Number of wines per region', 'Region', 'Number', True)
+bar_graph(wine_count_by_winery, 'Number of wines per winery', 'Winery', 'Number', True)
+bar_graph(wines_per_price_range, 'Number of wines per price range', 'Price', 'Number', False)
+bar_graph(wines_per_score, 'Number of wines per score', 'Score', 'Number', False)
 
-bar_graph(avg_score_per_type, 'Average score per type', 'Type', 'Score')
-bar_graph(avg_score_per_region, 'Average score per region', 'Region', 'Score')
-bar_graph(avg_score_per_winery, 'Average score per winery', 'Winery', 'Score')
+bar_graph(avg_score_per_type, 'Average score per type', 'Type', 'Score', False)
+bar_graph(avg_score_per_region, 'Average score per region', 'Region', 'Score', True)
+bar_graph(avg_score_per_winery, 'Average score per winery', 'Winery', 'Score', True)
 
-bar_graph(avg_price_per_type, 'Average price per type', 'Type', 'Price')
-bar_graph(avg_price_per_region, 'Average price per region', 'Region', 'Price')
-bar_graph(avg_price_per_winery, 'Average price per winery', 'Winery', 'Price')
+bar_graph(avg_price_per_type, 'Average price per type', 'Type', 'Price', False)
+bar_graph(avg_price_per_region, 'Average price per region', 'Region', 'Price', True)
+bar_graph(avg_price_per_winery, 'Average price per winery', 'Winery', 'Price', True)
 
-bar_graph(reviewers_per_number_of_reviews, 'Reviewers per number of reviews', 'Number of reviews', 'Number of reviewers')
+bar_graph(reviewers_per_number_of_reviews, 'Number of reviews per reviewer', 'Reviewers', 'Number of reviews', False)
 
