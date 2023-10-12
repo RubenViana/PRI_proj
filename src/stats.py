@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 
 dataset = pd.read_csv('src/updated_dataset.csv')
 
-def bar_graph(ds, title, xlabel, ylabel, sort):
+def bar_graph(ds, title, xlabel, ylabel, sort, sortType=False):
     
     if sort:
-        ds_top20 = ds.sort_values(ascending=False).head(20)
+        ds_top20 = ds.sort_values(ascending=sortType).head(20)
     else:
         ds_top20 = ds.head(20)
 
@@ -101,19 +101,51 @@ bar_graph(reviewers_per_number_of_reviews, 'Number of reviews per reviewer', 'Re
 # New stats
 
 # 1. Top 10 best rated wines
-top_10_best_rated = dataset.nlargest(10, 'score')
+top_10_best_rated = dataset[['name', 'score']].sort_values(by='score', ascending=False).head(10)
+plt.bar(top_10_best_rated['name'], top_10_best_rated['score'])
+plt.title('Top 10 Best Wines')
+plt.xlabel('Wine Name')
+plt.ylabel('Wine Rating')
+plt.xticks(rotation=90, ha='right')
+plt.savefig('stats/' + 'Top 10 Best Wines'  + '.png', bbox_inches='tight')
+plt.clf()
 
 # 2. Top 10 worst rated wines
-top_10_worst_rated = dataset.nsmallest(10, 'score')
+top_10_worst_rated = dataset[['name', 'score']].sort_values(by='score', ascending=True).head(10)
+plt.bar(top_10_worst_rated['name'], top_10_worst_rated['score'])
+plt.title('Top 10 Worst Wines')
+plt.xlabel('Wine Name')
+plt.ylabel('Wine Rating')
+plt.xticks(rotation=90, ha='right')
+plt.savefig('stats/' + 'Top 10 Worst Wines'  + '.png', bbox_inches='tight')
+plt.clf()
 
 # 3. Top 10 most expensive wines
-top_10_most_expensive = dataset.nlargest(10, 'price')
+top_10_most_expensive = dataset[['name', 'price']].sort_values(by='price', ascending=False).head(10)
+plt.bar(top_10_most_expensive['name'], top_10_most_expensive['price'])
+plt.title('Top 10 Most Expensive Wines')
+plt.xlabel('Wine Name')
+plt.ylabel('Wine Price')
+plt.xticks(rotation=90, ha='right')
+plt.savefig('stats/' + 'Top 10 Most Expensive Wines'  + '.png', bbox_inches='tight')
+plt.clf()
 
-# 4. Top 10 least expensive wines
-top_10_least_expensive = dataset.nsmallest(10, 'price')
+# 4. Top 10 cheapest wines
+top_10_cheapest = dataset[['name', 'price']].sort_values(by='price', ascending=True).head(10)
+plt.bar(top_10_cheapest['name'], top_10_cheapest['price'])
+plt.title('Top 10 Cheapest Wines')
+plt.xlabel('Wine Name')
+plt.ylabel('Wine Price')
+plt.xticks(rotation=90, ha='right')
+plt.savefig('stats/' + 'Top 10 Cheapest Wines'  + '.png', bbox_inches='tight')
+plt.clf()
 
+# 5. Price distribution per score
+price_distribution_per_score = dataset[['price', 'score']].sort_values(by='score', ascending=True)
+plt.scatter(price_distribution_per_score['price'], price_distribution_per_score['score'])
+plt.title('Price Distribution per Score')
+plt.xlabel('Price')
+plt.ylabel('Score')
+plt.savefig('stats/' + 'Price Distribution per Score'  + '.png', bbox_inches='tight')
+plt.clf()
 
-# bar_graph(top_10_best_rated['score'], 'Top 10 best rated wines', 'Wine', 'Score', False)
-# bar_graph(top_10_worst_rated['score'], 'Top 10 worst rated wines', 'Wine', 'Score', False)
-# bar_graph(top_10_most_expensive['price'], 'Top 10 most expensive wines', 'Wine', 'Price', False)
-# bar_graph(top_10_least_expensive['price'], 'Top 10 least expensive wines', 'Wine', 'Price', False)
