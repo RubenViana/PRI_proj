@@ -1,0 +1,122 @@
+{
+	"add-field-type": [
+        {
+            "name":"basicText",
+            "class":"solr.TextField",
+            "indexAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            },
+            "queryAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            }
+        },
+        {
+            "name":"typeColorText",
+            "class":"solr.TextField",
+            "indexAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            },
+            "queryAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
+            }
+        },
+        {
+            "name":"regularText",
+            "class":"solr.TextField",
+            "indexAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"},
+                    {"class":"solr.EnglishMinimalStemFilterFactory"},
+                    {"class":"solr.PorterStemFilterFactory"}
+                ]
+            },
+            "queryAnalyzer":{
+                "tokenizer":{
+                    "class":"solr.StandardTokenizerFactory"
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"},
+                    {"class":"solr.EnglishMinimalStemFilterFactory"},
+                    {"class":"solr.PorterStemFilterFactory"}
+                ]
+            }
+        }
+    ],
+    "add-field": [
+        {
+            "name": "name",
+            "type": "basicText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name" : "winery",
+            "type": "basicText",
+            "indexed": false,
+            "stored": true
+        },
+        {
+            "name": "region",
+            "type": "basicText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "type_and_color",
+            "type": "typeColorText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "primary_grape",
+            "type": "basicText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "review",
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
+        },
+        {
+            "name": "reviewer",
+            "type": "basicText",
+            "indexed": false,
+            "stored": true
+        },
+        {
+            "name": "reviewer_info",
+            "type": "regularText",
+            "indexed": true,
+            "stored": true
+        }
+    ]
+}
