@@ -23,7 +23,7 @@ def ap(results, relevant):
 
 
 @metric
-def p10(results, relevant, n=10):
+def p20(results, relevant, n=20):
     """Precision at N"""
     return len([val for val in results[:n] if val in relevant])/n
 
@@ -31,7 +31,7 @@ def p10(results, relevant, n=10):
 # Define metrics to be calculated
 evaluation_metrics = {
     'ap': 'Average Precision',
-    'p10': 'Precision at 10 (P@10)'
+    'p20': 'Precision at 20 (P@20)'
 }
 
 
