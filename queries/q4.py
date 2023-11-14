@@ -2,11 +2,11 @@ from evaluation import EvaluateQuery
 import requests
 import os
 
-QRELS_FILE = "./q1/qrels.txt"
+QRELS_FILE = "./q4/qrels.txt"
 
 query = {
-    "sys1" : "http://localhost:8983/solr/wines/select?indent=true&q.op=OR&q=(name%3A%20nv)%20(review%3A%20disgorged)%20(review%3A%202023)&rows=20",
-    "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(name%3A%20nv)%20(review%3A%20disgorged)%5E3%20(review%3A%202023)%5E3&rows=20"
+    "sys1" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=region%3A%20rohne&rows=20",
+    "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=region%3A%20rohne~1&rows=20"
 }
 
 relevant = list(map(lambda el: el.strip(), open(QRELS_FILE).readlines()))
@@ -25,7 +25,7 @@ for system, url in query.items():
     results_dict[system] = results
 
     qe = EvaluateQuery(results, relevant)
-    path = f'q1/{system}'
+    path = f'q4/{system}'
 
     if not os.path.isdir(path):
         os.makedirs(path)
