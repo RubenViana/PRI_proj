@@ -5,8 +5,10 @@ import os
 QRELS_FILE = "./q1/qrels.txt"
 
 query = {
-    "sys1" : "http://localhost:8983/solr/wines/select?indent=true&q.op=OR&q=(name%3A%20nv)%20(review%3A%20disgorged)%20(review%3A%202023)&rows=20",
-    "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(name%3A%20nv)%20(review%3A%20disgorged)%5E3%20(review%3A%202023)%5E3&rows=20"
+    "sys1" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=AND&q=review%3A%20%22sleeking%20finish%22&rows=20",
+    "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=AND&q=review%3A%20%22sleeking%20finish%22~5&rows=20",
+    "sys3" : "http://localhost:8983/solr/wines_schemaless/select?defType=lucene&indent=true&q.op=AND&q=review%3A%20%22sleeking%20finish%22&rows=20",
+    "sys4" : "http://localhost:8983/solr/wines_schemaless/select?defType=lucene&indent=true&q.op=AND&q=review%3A%20%22sleeking%20finish%22~5&rows=20"
 }
 
 relevant = list(map(lambda el: el.strip(), open(QRELS_FILE).readlines()))
@@ -20,7 +22,7 @@ for system, url in query.items():
     # Get query results from Solr instance
     results = requests.get(url).json()['response']['docs']
 
-    results = [x['id'] for x in results]
+    results = [x['wine_id'] for x in results]
 
     results_dict[system] = results
 

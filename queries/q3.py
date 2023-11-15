@@ -5,8 +5,10 @@ import os
 QRELS_FILE = "./q3/qrels.txt"
 
 query = {
-    "sys1" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%20AND%20primary_grape%3A%20noir)%20(name%3A%20pinot%20AND%20name%3A%20noir)&rows=20",
-    "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%20AND%20primary_grape%3A%20noir)%5E4%20(name%3A%20pinot%20AND%20name%3A%20noir)&rows=20"
+    "sys1" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20Pinot%20AND%20review%3A%20Noir)%20(primary_grape%3A%20Pinot%20AND%20primary_grape%3A%20Noir)%20(name%3A%20Pinot%20AND%20name%3A%20Noir)&rows=20",
+    "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20Pinot%20AND%20review%3A%20Noir)%20(primary_grape%3A%20Pinot%20AND%20primary_grape%3A%20Noir)%5E4%20(name%3A%20Pinot%20AND%20name%3A%20Noir)&rows=20",
+    "sys3" : "http://localhost:8983/solr/wines_schemaless/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20Pinot%20AND%20review%3A%20Noir)%20(primary_grape%3A%20Pinot%20AND%20primary_grape%3A%20Noir)%20(name%3A%20Pinot%20AND%20name%3A%20Noir)&rows=20",
+    "sys4" : "http://localhost:8983/solr/wines_schemaless/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20Pinot%20AND%20review%3A%20Noir)%20(primary_grape%3A%20Pinot%20AND%20primary_grape%3A%20Noir)%5E4%20(name%3A%20Pinot%20AND%20name%3A%20Noir)&rows=20"
 }
 
 relevant = list(map(lambda el: el.strip(), open(QRELS_FILE).readlines()))
@@ -20,7 +22,7 @@ for system, url in query.items():
     # Get query results from Solr instance
     results = requests.get(url).json()['response']['docs']
 
-    results = [x['id'] for x in results]
+    results = [x['wine_id'] for x in results]
 
     results_dict[system] = results
 

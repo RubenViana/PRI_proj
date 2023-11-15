@@ -71,6 +71,12 @@
     ],
     "add-field": [
         {
+            "name": "wine_id",
+            "type": "string",
+            "indexed": false,
+            "stored": true
+        },
+        {
             "name": "name",
             "type": "basicText",
             "indexed": true,
