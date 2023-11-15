@@ -7,8 +7,8 @@ QRELS_FILE = "./q5/qrels.txt"
 query = {
     "sys1" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(type_and_color%3A%20Red%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20balanced)%20(type_and_color%3A%20White%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20dry)&rows=20",
     "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(type_and_color%3A%20Red%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20balanced%5E4)%20(type_and_color%3A%20White%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20dry)&rows=20",
-    "sys3" : "http://localhost:8983/solr/wines_schemaless/select?defType=lucene&indent=true&q.op=OR&q=(type_and_color%3A%20Red%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20balanced)%20(type_and_color%3A%20White%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20dry)&rows=20",
-    "sys4" : "http://localhost:8983/solr/wines_schemaless/select?defType=lucene&indent=true&q.op=OR&q=(type_and_color%3A%20Red%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20balanced%5E4)%20(type_and_color%3A%20White%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20dry)&rows=20"
+    "sys3" : "http://localhost:8983/solr/wines_filterless/select?defType=lucene&indent=true&q.op=OR&q=(type_and_color%3A%20Red%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20balanced)%20(type_and_color%3A%20White%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20dry)&rows=20",
+    "sys4" : "http://localhost:8983/solr/wines_filterless/select?defType=lucene&indent=true&q.op=OR&q=(type_and_color%3A%20Red%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20balanced%5E4)%20(type_and_color%3A%20White%20AND%20type_and_color%3A%20Still%20AND%20review%3A%20dry)&rows=20"
 }
 
 relevant = list(map(lambda el: el.strip(), open(QRELS_FILE).readlines()))

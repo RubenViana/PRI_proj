@@ -7,8 +7,8 @@ QRELS_FILE = "./q2/qrels.txt"
 query = {
     "sys1" : "http://localhost:8983/solr/wines/select?defType=edismax&fq=(price%3A%5B*%20TO%2020%5D)&fq=(score%3A%5B90%20TO%20*%5D)&indent=true&q.op=AND&q=(reviewer_info%3Asenior)%20(reviewer_info%3Aeditor)&rows=20",
     "sys2" : "http://localhost:8983/solr/wines/select?bq=date%3A%20%5B2021%20TO%202023%5D&defType=edismax&fq=(price%3A%5B*%20TO%2020%5D)&fq=(score%3A%5B90%20TO%20*%5D)&indent=true&q.op=AND&q=(reviewer_info%3Asenior)%20(reviewer_info%3Aeditor)&rows=20",
-    "sys3" : "http://localhost:8983/solr/wines_schemaless/select?defType=edismax&fq=(price%3A%5B*%20TO%2020%5D)&fq=(score%3A%5B90%20TO%20*%5D)&indent=true&q.op=AND&q=(reviewer_info%3Asenior)%20(reviewer_info%3Aeditor)&rows=20",
-    "sys4" : "http://localhost:8983/solr/wines_schemaless/select?bq=date%3A%20%5B2021%20TO%202023%5D&defType=edismax&fq=(price%3A%5B*%20TO%2020%5D)&fq=(score%3A%5B90%20TO%20*%5D)&indent=true&q.op=AND&q=(reviewer_info%3Asenior)%20(reviewer_info%3Aeditor)&rows=20"
+    "sys3" : "http://localhost:8983/solr/wines_filterless/select?defType=edismax&fq=(price%3A%5B*%20TO%2020%5D)&fq=(score%3A%5B90%20TO%20*%5D)&indent=true&q.op=AND&q=(reviewer_info%3Asenior)%20(reviewer_info%3Aeditor)&rows=20",
+    "sys4" : "http://localhost:8983/solr/wines_filterless/select?bq=date%3A%20%5B2021%20TO%202023%5D&defType=edismax&fq=(price%3A%5B*%20TO%2020%5D)&fq=(score%3A%5B90%20TO%20*%5D)&indent=true&q.op=AND&q=(reviewer_info%3Asenior)%20(reviewer_info%3Aeditor)&rows=20"
 }
 
 relevant = list(map(lambda el: el.strip(), open(QRELS_FILE).readlines()))
