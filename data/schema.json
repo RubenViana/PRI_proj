@@ -79,7 +79,7 @@
         {
             "name": "name",
             "type": "basicText",
-            "indexed": true,
+            "indexed": false,
             "stored": true
         },
         {
