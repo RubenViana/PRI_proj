@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.ant-dropdown-menu-item-selected {
+  background-color: #34D399 !important; 
+  color: white !important;
+}
+.ant-dropdown-menu-item-selected:hover {
+  background-color: #34D399 !important;
+  color: white !important;
+}

@@ -1,34 +1,27 @@
 import React, { useState } from 'react'
-import { Header } from '../components/Header'
-import { ListWines } from '../components/ListWines'
+import SearchIcon from '@mui/icons-material/Search'
 
 export const HomePage = () => {
-  // State to manage the visibility of filter options
-  const [showFilters, setShowFilters] = useState(false)
+  const [searchContent, setSearchContent] = useState("")
+  
 
   return (
     <div>
-        <header className="flex items-center justify-center h-screen bg-cover bg-center text-white text-center h-screen bg-[url('../public/wineryBackground.jpg')] bg-blend-overlay">
-            <form className="mx-auto w-2/3 rounded-full z-50 flex relative" action="#" method="get">
+        <header className="flex flex-col items-center h-screen bg-cover bg-center text-white text-center h-screen bg-[url('../public/wineryBackground.jpg')] bg-blend-overlay">
+            <div className="mt-28">
+              <img src="/logo1.png" alt="logo" className="w-5/6 mx-auto drop-shadow-xl shadow-cyan-900" />  {/* make this route to the home page */}
+            </div>
+            <form className="mx-auto w-2/3 rounded-full z-50 relative flex items-center" action={"/search/" + searchContent}>
+                <SearchIcon className="absolute left-2 text-green-700" />
                 <input
                 type="text"
-                className="w-full p-3 rounded-full text-green-700 focus:outline-none shadow-lg shadow-green-800 "
+                className="w-full px-10 p-3 rounded-full text-black focus:outline-none shadow-[0_2px_5px_1px] shadow-green-900"
                 placeholder="Search for a wine ..."
+                id="search"
+                name="search"
+                onChange={(e) => setSearchContent(e.target.value)}
                 />
-                <button
-                  type="button"
-                  className="ml-5 bg-green-500 text-green-700 bg-white rounded-full shadow-lg shadow-green-800"
-                  onClick={() => setShowFilters(!showFilters)}
-                >
-                  Filters
-                </button>
-                {showFilters && (
-                  <div className="absolute -bottom-35 w-2/3 h-20 inset-x-0 shadow-lg rounded shadow-green-800 bg-white">
-                    
-                  </div>
-                )}
             </form>
-
         </header> 
     </div>
   )
