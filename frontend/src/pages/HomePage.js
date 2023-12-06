@@ -11,7 +11,7 @@ export const HomePage = () => {
             <div className="mt-28">
               <img src="/logo1.png" alt="logo" className="w-5/6 mx-auto drop-shadow-xl shadow-cyan-900" />  {/* make this route to the home page */}
             </div>
-            <form className="mx-auto w-2/3 rounded-full z-50 relative flex items-center" action={"/search/" + searchContent}>
+            <form className="mx-auto w-1/2 rounded-full z-50 relative flex items-center" action={"/search/" + searchContent}>
                 <SearchIcon className="absolute left-2 text-green-700" />
                 <input
                 type="text"

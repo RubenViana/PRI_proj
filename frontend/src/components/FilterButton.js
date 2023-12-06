@@ -2,34 +2,29 @@ import React from 'react'
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Tooltip } from 'antd';
 import { useState } from 'react';
+import { Badge, Avatar } from 'antd';
 
 export const FilterButton = (props) => {
-    const [optionSelected, setOptionSelected] = useState("")
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
     const handleMenuClick = (e) => {
-            setOptionSelected(props.items[e.key].label);
-            const results = [{
-                name: 'Courtney Henry',
-                email: 'courtney.henry@example.com',
-                role: 'Designer',
-                imageUrl:
-                  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-                lastSeen: '3h ago',
-                lastSeenDateTime: '2023-01-23T13:23Z',
-              },
-              {
-                name: 'Tom Cook',
-                email: 'tom.cook@example.com',
-                role: 'Director of Product',
-                imageUrl:
-                  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-                lastSeen: null,
-              }]
+        const selectedLabel = props.items[e.key].label;
 
-            //fetch results with filters from solr
-            
-            props.setResults(results)
-        };
+        if (selectedOptions.includes(selectedLabel)) {
+          // Remove the selected option if already selected
+          setSelectedOptions((prevSelectedOptions) =>
+            prevSelectedOptions.filter((option) => option !== selectedLabel)
+          );
+        } else {
+          // Add the selected option if not selected
+          setSelectedOptions((prevSelectedOptions) => [...prevSelectedOptions, selectedLabel]);
+        }
+        
+
+        //fetch results with filters from solr !!! maybe not
+        
+        // props.setResults(results)
+      };
     
     const menuProps = {
         items: props.items,
@@ -38,12 +33,16 @@ export const FilterButton = (props) => {
         selectable: true,
     };
 
+    const numberSelected = selectedOptions.length;
+     
     return (
         <Dropdown menu={menuProps} placement="bottom">
+          <Badge count={numberSelected} size='small' color='lime'>
             <div className="hover:bg-green-100 p-2 rounded-full h-10 border border-green-900/20 text-sm cursor-pointer">
                 {props.name}
                 <DownOutlined className="ml-1"/>
             </div>
+          </Badge>
         </Dropdown>
     )
 }
