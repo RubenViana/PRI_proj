@@ -1,9 +1,11 @@
 import React from 'react'
 import Rating from '@mui/material/Rating'
+import { Link } from 'react-router-dom'
 
 export const WineCard = (props) => {
   return (
-    <li key={props.wine.wine_id} className="w-2/3 flex justify-between gap-x-6 py-5">
+    <Link to={"/wine/" + props.wine.wine_id}>
+      <li key={props.wine.wine_id} className="w-2/3 flex justify-between gap-x-6 p-5 rounded-lg hover:bg-green-50">
         <div className="flex min-w-0 gap-x-4">
           <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={props.wine.type_and_color.toLowerCase().includes('red') ? '/redWine.png' : '/whiteWine.png'} alt="" />
           <div className="min-w-0">
@@ -16,5 +18,6 @@ export const WineCard = (props) => {
           <p class="mt-1 text-xs leading-5 text-gray-500"><Rating name="" precision="0.5" value={props.wine.score/20.0} readOnly /></p>
         </div>
       </li>
+    </Link>
   )
 }
