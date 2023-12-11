@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export const WineCard = (props) => {
   return (
-    <Link to={"/wine/" + props.wine.wine_id}>
+    <Link to={"/wine/" + props.wine.wine_id} style={{ display: "contents" }}>
       <li key={props.wine.wine_id} className="w-2/3 flex justify-between gap-x-6 p-5 rounded-lg hover:bg-green-50">
         <div className="flex min-w-0 gap-x-4">
           <img className="h-12 w-12 flex-none rounded-full bg-gray-50" src={props.wine.type_and_color.toLowerCase().includes('red') ? '/redWine.png' : '/whiteWine.png'} alt="" />
