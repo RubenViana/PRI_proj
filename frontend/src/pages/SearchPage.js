@@ -34,7 +34,14 @@ export const SearchPage = (props) => {
   const [newSearchContent, setSearchContent] = useState("")
   const { searchContent } = useParams();
   const [results, setResults] = useState([])
-  const data = winesData.slice(0, 100)
+
+  // Function to select n random elements from the list
+  const selectRandomElements = (list, n) => {
+    const shuffledList = list.sort(() => Math.random() - 0.5);
+    return shuffledList.slice(0, n);
+  };
+
+  const data = selectRandomElements(winesData, 100);
 
 
   React.useEffect(() => {
