@@ -11,10 +11,12 @@ export const FilterSlider = (props) => {
     filterKey = 'price';
   }
 
-  const [values, setValues] = useState([]);
+  const [values, setValues] = useState([props.defaultValues[0], props.defaultValues[1]]);
 
   useEffect(() => {
-    filterResults(values);
+    props.setFiltersList((prevFiltersList) => {
+      return [...prevFiltersList.filter(option => option.filterKey !== filterKey), { filterKey, values }];
+  });
     
   }, [values]);
 
@@ -43,7 +45,7 @@ export const FilterSlider = (props) => {
                   [props.max]: props.max + props.formater,
                 }
               }
-              onChange={handleSliderChange}
+              onAfterChange={handleSliderChange}
               // onAfterChange={onAfterChange}
             />
           </div>

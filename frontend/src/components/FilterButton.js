@@ -19,16 +19,8 @@ export const FilterButton = (props) => {
     filterKey = 'date';
   }
 
-  useEffect(() => {
-    filterResults(selectedOptions);
-    
-  }, [selectedOptions]);
-
-
   const handleMenuClick = (e) => {
     const selectedLabel = props.items[e.key].label;
-    console.log('selectedLabel', selectedLabel)
-    console.log('e.key', e.key)
     
     setSelectedOptions((prevSelectedOptions) => {
       if (prevSelectedOptions.includes(selectedLabel)) {
@@ -39,6 +31,17 @@ export const FilterButton = (props) => {
         return [...prevSelectedOptions, selectedLabel];
       }
     });
+
+    props.setFiltersList((prevFiltersList) => {
+      if (prevFiltersList.some(option => option.filterKey === filterKey && option.selectedLabel === selectedLabel)) {
+        // Remove the selected option if already selected
+        return prevFiltersList.filter(option => !(option.filterKey === filterKey && option.selectedLabel === selectedLabel));
+      } else {
+        // Add the selected option if not selected
+        return [...prevFiltersList, { filterKey, selectedLabel }];
+      }
+    });
+
   };
 
     const filterResults = (selectedOptions) => {

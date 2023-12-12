@@ -34,6 +34,7 @@ export const SearchPage = (props) => {
   const [newSearchContent, setSearchContent] = useState("")
   const { searchContent } = useParams();
   const [results, setResults] = useState([])
+  const [filtersList, setFiltersList] = useState([])
 
   // Function to select n random elements from the list
   const selectRandomElements = (list, n) => {
@@ -41,13 +42,59 @@ export const SearchPage = (props) => {
     return shuffledList.slice(0, n);
   };
 
-  const data = selectRandomElements(winesData, 100);
+  const data = winesData.slice(0, 100);
 
+  const filterResults = (filtersList) => {
+    // Implement the common filter logic here
+    if (filtersList.length === 0) {
+      setResults(data); // No filters applied, return original results
+    } else {
+      const filteredResults = data.filter((result) => {
+        return filtersList.every((option) => {
+          if (option.filterKey === 'type_and_color') {
+            const selectedOptions = filtersList
+              .filter((opt) => opt.filterKey === 'type_and_color')
+              .flatMap((opt) => opt.selectedLabel);
+            return selectedOptions.includes(result.type_and_color);
+          }
+          else if (option.filterKey === 'region') {
+            const selectedOptions = filtersList
+              .filter((opt) => opt.filterKey === 'region')
+              .flatMap((opt) => opt.selectedLabel);
+            return selectedOptions.includes(result.region.split(" / ")[0]);
+          }
+          else if (option.filterKey === 'date') {
+            const selectedOptions = filtersList
+              .filter((opt) => opt.filterKey === 'date')
+              .flatMap((opt) => opt.selectedLabel);
+            return selectedOptions.includes(result.date);;
+          }
+          else if (option.filterKey === 'score') {
+            const selectedOptions = filtersList
+              .filter((opt) => opt.filterKey === 'score')
+              .flatMap((opt) => opt.values);
+            return result.score >= selectedOptions[0] && result.score <= selectedOptions[1];
+          }
+          else if (option.filterKey === 'price') {
+            const selectedOptions = filtersList
+              .filter((opt) => opt.filterKey === 'price')
+              .flatMap((opt) => opt.values);
+            return result.price >= selectedOptions[0] && result.price <= selectedOptions[1];
+          }
+        });
+      });
+      setResults(filteredResults);
+    }
+  };
 
   React.useEffect(() => {
     /* dar fetch do solr here */
     setResults(data)
   }, [])
+
+  React.useEffect(() => {
+    filterResults(filtersList)
+  }, [filtersList])
 
   let filters = [
     {
@@ -147,10 +194,10 @@ export const SearchPage = (props) => {
         </div>
         <div id="filters" className="ml-64 h-16 flex space-x-6">
           {filters.map((filter) => (
-            <FilterButton id={filter.name} name={filter.name} items={filter.values} results={results} setResults={setResults} data={data}/>
+            <FilterButton id={filter.name} name={filter.name} items={filter.values} results={results} setResults={setResults} data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
           ))}
-          <FilterSlider name="Score" max={100} defaultValues={[0, 100]} formater="*" results={results} setResults={setResults} data={data}/>
-          <FilterSlider name="Price" max={3000} defaultValues={[0, 3000]} formater="€" results={results} setResults={setResults} data={data}/>
+          <FilterSlider name="Score" max={100} defaultValues={[0, 100]} formater="*" results={results} setResults={setResults} data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
+          <FilterSlider name="Price" max={3000} defaultValues={[0, 3000]} formater="€" results={results} setResults={setResults} data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
         </div>
       </div>
       <HideOnScroll {...props}>
@@ -176,8 +223,9 @@ export const SearchPage = (props) => {
           </div>
         </AppBar>
       </HideOnScroll>
-      <div className="mt-10">
-        <ul className="divide-y divide-gray-100 ml-64 w-2/3 mt-20">
+      <div className="mt-3 ml-64">
+        <p className='text-green-900/50 text-start px-5'>Found {results.length} wines</p>
+        <ul className="divide-y divide-gray-100 mt-10">
           {results.map((wine) => (
             <WineCard wine={wine} />
           ))}
