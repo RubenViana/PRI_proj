@@ -56,7 +56,7 @@ export const FilterButton = (props) => {
     const numberSelected = selectedOptions.length;
      
     return (
-        <Dropdown menu={menuProps} placement="bottom">
+        <Dropdown menu={menuProps} placement="bottom" trigger={['click', 'hover']}>
           <Badge count={numberSelected} size='small' color='lime'>
             <Button className="p-2 rounded-full h-10">
                 {props.name}

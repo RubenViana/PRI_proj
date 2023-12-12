@@ -8,7 +8,7 @@ import { useState } from "react";
 import { FilterButton } from "../components/FilterButton";
 import { WineCard } from '../components/WineCard';
 import { FilterSlider } from '../components/FilterSlider';
-import { Select } from 'antd';
+import { Pagination, Select } from 'antd';
 import  winesData from '../data/wines.json';
 
 
@@ -37,7 +37,7 @@ export const SearchPage = (props) => {
   const [filtersList, setFiltersList] = useState([])
   const [sortValue, setSortValue] = useState("price")
 
-  const data = winesData.slice(0, 20);
+  const data = winesData;
 
   const filterResults = React.useCallback(() => {
     // Implement the common filter logic here
@@ -91,11 +91,6 @@ export const SearchPage = (props) => {
       setResults(filteredResults);
     }
   }, [data, filtersList]);
-
-  // React.useEffect(() => {
-  //   /* dar fetch do solr here */
-  //   setResults(data)
-  // }, [])
 
   React.useEffect(() => {
     filterResults()
@@ -212,11 +207,18 @@ export const SearchPage = (props) => {
     ]},
   ];
 
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 20;
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedResults = results.slice(startIndex, endIndex);
 
   return (
     <div>
       <div className="bg-white border-b border-green-900/20">
-        <div className="h-20 flex">
+        <div className="flex">
           <div className="flex w-32 items-center">
             <Link to="/">
               <img src="/logo.png" alt="logo" />
@@ -264,29 +266,15 @@ export const SearchPage = (props) => {
         </AppBar>
       </HideOnScroll>
       <div className="mt-3 ml-64 w-[46rem]">
-        <div className='flex justify-between px-5'>
+        <div className='flex px-5'>
           <p className='text-green-900/50 text-start flex items-center aligh-middle w-fit'>Found {results.length} wines</p>
-          <Select
-            className='flex w-24'
-            defaultValue="price"
-            onChange={(value) => {console.log(value)}}
-            options={[
-              {
-                value: 'price',
-                label: 'Price',
-              },
-              {
-                value: 'score',
-                label: 'Score',
-              },
-            ]}
-          />
         </div>
         <ul className="divide-y divide-gray-100 mt-10">
-          {results.map((wine) => (
-            <WineCard wine={wine} />
+          {paginatedResults.map((wine) => (
+            <WineCard wine={wine} key={wine.wine_id}/>
           ))}
         </ul>
+        <Pagination className='my-10' current={currentPage} total={results.length} pageSize={pageSize} onChange={(page) => setCurrentPage(page)} showSizeChanger={false}/>
       </div>
     </div>
   );
