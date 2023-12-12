@@ -6,9 +6,9 @@ QRELS_FILE = "./q1/qrels.txt"
 
 query = {
     "sys1" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=AND&q=review%3A%20%22sleeking%20finish%22&rows=20",
-    "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=AND&q=review%3A%20%22sleeking%20finish%22~5&rows=20",
+    "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=AND&q=(review%3A%20%22sleeking%20finish%22~5)%5E4&rows=20",
     "sys3" : "http://localhost:8983/solr/wines_filterless/select?defType=lucene&indent=true&q.op=AND&q=review%3A%20%22sleeking%20finish%22&rows=20",
-    "sys4" : "http://localhost:8983/solr/wines_filterless/select?defType=lucene&indent=true&q.op=AND&q=review%3A%20%22sleeking%20finish%22~5&rows=20"
+    "sys4" : "http://localhost:8983/solr/wines_filterless/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20%22sleeking%20finish%22~5)%5E4&rows=20"
 }
 
 relevant = list(map(lambda el: el.strip(), open(QRELS_FILE).readlines()))

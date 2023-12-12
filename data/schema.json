@@ -50,10 +50,13 @@
                     "class":"solr.StandardTokenizerFactory"
                 },
                 "filters":[
+                    {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
                     {"class":"solr.LowerCaseFilterFactory"},
                     {"class":"solr.EnglishMinimalStemFilterFactory"},
-                    {"class":"solr.PorterStemFilterFactory"}
+                    {"class":"solr.PorterStemFilterFactory"},
+                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
+                    {"class":"solr.FlattenGraphFilterFactory"}
                 ]
             },
             "queryAnalyzer":{
@@ -61,10 +64,12 @@
                     "class":"solr.StandardTokenizerFactory"
                 },
                 "filters":[
+                    {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
                     {"class":"solr.LowerCaseFilterFactory"},
                     {"class":"solr.EnglishMinimalStemFilterFactory"},
-                    {"class":"solr.PorterStemFilterFactory"}
+                    {"class":"solr.PorterStemFilterFactory"},
+                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"}
                 ]
             }
         }
@@ -79,13 +84,13 @@
         {
             "name": "name",
             "type": "basicText",
-            "indexed": false,
+            "indexed": true,
             "stored": true
         },
         {
             "name" : "winery",
             "type": "basicText",
-            "indexed": false,
+            "indexed": true,
             "stored": true
         },
         {
@@ -115,7 +120,7 @@
         {
             "name": "reviewer",
             "type": "basicText",
-            "indexed": false,
+            "indexed": true,
             "stored": true
         },
         {

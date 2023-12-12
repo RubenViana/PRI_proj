@@ -6,12 +6,20 @@
             "indexAnalyzer":{
                 "tokenizer":{
                     "class":"solr.StandardTokenizerFactory"
-                }
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
             },
             "queryAnalyzer":{
                 "tokenizer":{
                     "class":"solr.StandardTokenizerFactory"
-                }
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
             }
         },
         {
@@ -20,12 +28,20 @@
             "indexAnalyzer":{
                 "tokenizer":{
                     "class":"solr.StandardTokenizerFactory"
-                }
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
             },
             "queryAnalyzer":{
                 "tokenizer":{
                     "class":"solr.StandardTokenizerFactory"
-                }
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
             }
         },
         {
@@ -34,12 +50,20 @@
             "indexAnalyzer":{
                 "tokenizer":{
                     "class":"solr.StandardTokenizerFactory"
-                }
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
             },
             "queryAnalyzer":{
                 "tokenizer":{
                     "class":"solr.StandardTokenizerFactory"
-                }
+                },
+                "filters":[
+                    {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.LowerCaseFilterFactory"}
+                ]
             }
         }
     ],
@@ -53,13 +77,13 @@
         {
             "name": "name",
             "type": "basicText",
-            "indexed": false,
+            "indexed": true,
             "stored": true
         },
         {
             "name" : "winery",
             "type": "basicText",
-            "indexed": false,
+            "indexed": true,
             "stored": true
         },
         {
@@ -89,7 +113,7 @@
         {
             "name": "reviewer",
             "type": "basicText",
-            "indexed": false,
+            "indexed": true,
             "stored": true
         },
         {
