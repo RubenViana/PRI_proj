@@ -1,0 +1,62 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ant-dropdown-menu-item-selected {
+  background-color: #34D399 !important; 
+  color: white !important;
+}
+.ant-dropdown-menu-item-selected:hover {
+  background-color: #34D399 !important;
+  color: white !important;
+}
+.ant-dropdown-menu{
+  box-shadow: 0 2px 5px 1px #34D399 !important;
+}
+
+.ant-slider-track{
+  background-color: #34D399 !important;
+}
+
+.ant-slider-handle{
+  border-color: #34D399 !important;
+}
+
+.ant-slider-handle:hover::after, .ant-slider-handle:focus::after, .ant-slider-handle:active::after{
+  box-shadow: 0 2px 5px 1px #34D399 !important;
+}
