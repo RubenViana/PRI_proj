@@ -5,10 +5,10 @@ import Slide from '@mui/material/Slide';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { FilterButton } from "../components/FilterButton";
 import { WineCard } from '../components/WineCard';
 import { FilterSlider } from '../components/FilterSlider';
+import { Select } from 'antd';
 import  winesData from '../data/wines.json';
 
 
@@ -35,6 +35,7 @@ export const SearchPage = (props) => {
   const { searchContent } = useParams();
   const [results, setResults] = useState([])
   const [filtersList, setFiltersList] = useState([])
+  const [sortValue, setSortValue] = useState("price")
 
   // Function to select n random elements from the list
   const selectRandomElements = (list, n) => {
@@ -224,7 +225,7 @@ export const SearchPage = (props) => {
               <img src="/logo.png" alt="logo" />
             </Link>
           </div>
-          <form className="ml-32 w-1/2 rounded-full relative flex items-center" action={"/search/" + newSearchContent===null ? searchContent : newSearchContent}>
+          <form className="ml-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent===null ? searchContent : newSearchContent}>
             <SearchIcon className="absolute left-2 text-green-700" />
             <input
               type="text"
@@ -252,7 +253,7 @@ export const SearchPage = (props) => {
                   <img src="/logo.png" alt="logo" />
                 </Link>
               </div>
-              <form className="ml-32 w-1/2 rounded-full relative flex items-center" action={"/search/" + newSearchContent===null ? searchContent : newSearchContent}>
+              <form className="ml-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent===null ? searchContent : newSearchContent}>
                 <SearchIcon className="absolute left-2 text-green-700" />
                 <input
                   type="text"
@@ -266,8 +267,28 @@ export const SearchPage = (props) => {
           </div>
         </AppBar>
       </HideOnScroll>
-      <div className="mt-3 ml-64">
-        <p className='text-green-900/50 text-start px-5'>Found {results.length} wines</p>
+      <div className="mt-3 ml-64 w-fit">
+        <div className='flex justify-between px-5'>
+          <p className='text-green-900/50 text-start flex items-center aligh-middle w-fit'>Found {results.length} wines</p>
+          <Select
+            className='flex border-none'
+            defaultValue="price"
+            style={{
+              width: 120,
+            }}
+            onChange={(value) => {console.log(value)}}
+            options={[
+              {
+                value: 'price',
+                label: 'Price',
+              },
+              {
+                value: 'score',
+                label: 'Score',
+              },
+            ]}
+          />
+        </div>
         <ul className="divide-y divide-gray-100 mt-10">
           {results.map((wine) => (
             <WineCard wine={wine} />
