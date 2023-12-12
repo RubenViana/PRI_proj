@@ -4,12 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
+import { ConfigProvider } from 'antd';
+
+const antdConfig = {
+  theme: {
+    token: {
+    wireframe: false,
+    colorPrimary: '#34d399',
+    colorInfo: '#34d399',
+    },
+  },
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-      <App />
+      <ConfigProvider {...antdConfig}>
+        <App />
+      </ConfigProvider>
     </React.StrictMode>
   </BrowserRouter>
 );

@@ -3,7 +3,6 @@ import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Space, Tooltip } from 'antd';
 import { useState } from 'react';
 import { Badge } from 'antd';
-import { useEffect } from 'react';
 
 export const FilterButton = (props) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
@@ -46,18 +45,6 @@ export const FilterButton = (props) => {
     });
 
   };
-
-    const filterResults = (selectedOptions) => {
-      // Implement your filtering logic here
-
-      // For demonstration purposes, let's assume props.items is the source of data
-      if (selectedOptions.length === 0) {
-        props.setResults(props.data); // No filters applied, return original results
-      }
-      else {
-        props.setResults(props.data.filter((item) => selectedOptions.includes(item[filterKey].split(" / ")[0])))
-      }
-    };
     
     const menuProps = {
         items: props.items,
@@ -71,10 +58,10 @@ export const FilterButton = (props) => {
     return (
         <Dropdown menu={menuProps} placement="bottom">
           <Badge count={numberSelected} size='small' color='lime'>
-            <div className="hover:bg-green-100 p-2 rounded-full h-10 border border-green-900/20 text-sm cursor-pointer">
+            <Button className="p-2 rounded-full h-10">
                 {props.name}
-                <DownOutlined className="ml-1"/>
-            </div>
+                <DownOutlined/>
+            </Button>
           </Badge>
         </Dropdown>
     )

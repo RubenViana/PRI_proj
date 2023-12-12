@@ -31,21 +31,15 @@ function HideOnScroll(props) {
 
 
 export const SearchPage = (props) => {
-  const [newSearchContent, setSearchContent] = useState("")
   const { searchContent } = useParams();
+  const [newSearchContent, setSearchContent] = useState(searchContent)
   const [results, setResults] = useState([])
   const [filtersList, setFiltersList] = useState([])
   const [sortValue, setSortValue] = useState("price")
 
-  // Function to select n random elements from the list
-  const selectRandomElements = (list, n) => {
-    const shuffledList = list.sort(() => Math.random() - 0.5);
-    return shuffledList.slice(0, n);
-  };
+  const data = winesData.slice(0, 20);
 
-  const data = winesData.slice(0, 100);
-
-  const filterResults = (filtersList) => {
+  const filterResults = React.useCallback(() => {
     // Implement the common filter logic here
     if (filtersList.length === 0) {
       setResults(data); // No filters applied, return original results
@@ -89,19 +83,22 @@ export const SearchPage = (props) => {
               .flatMap((opt) => opt.values);
             return result.price >= selectedOptions[0] && result.price <= selectedOptions[1];
           }
+          else {
+            return true;
+          }
         });
       });
       setResults(filteredResults);
     }
-  };
+  }, [data, filtersList]);
+
+  // React.useEffect(() => {
+  //   /* dar fetch do solr here */
+  //   setResults(data)
+  // }, [])
 
   React.useEffect(() => {
-    /* dar fetch do solr here */
-    setResults(data)
-  }, [])
-
-  React.useEffect(() => {
-    filterResults(filtersList)
+    filterResults()
   }, [filtersList])
 
   let filters = [
@@ -225,23 +222,22 @@ export const SearchPage = (props) => {
               <img src="/logo.png" alt="logo" />
             </Link>
           </div>
-          <form className="ml-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent===null ? searchContent : newSearchContent}>
+          <form className="ml-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent}>
             <SearchIcon className="absolute left-2 text-green-700" />
             <input
-              type="text"
               className="w-full px-10 p-3 rounded-full text-black focus:outline-none shadow-[0_2px_5px_1px] shadow-green-900/20"
               placeholder="Search for a wine ..."
-              defaultValue={searchContent}
+              value={newSearchContent}
               onChange={(e) => setSearchContent(e.target.value)}
             />
           </form>
         </div>
-        <div id="filters" className="ml-64 h-16 flex space-x-6">
+        <div id="filters" className="ml-64 h-16 flex space-x-4">
           {filters.map((filter) => (
-            <FilterButton id={filter.name} name={filter.name} items={filter.values} results={results} setResults={setResults} data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
+            <FilterButton id={filter.name} name={filter.name} items={filter.values} data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
           ))}
-          <FilterSlider name="Score" max={100} defaultValues={[0, 100]} formater="*" results={results} setResults={setResults} data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
-          <FilterSlider name="Price" max={3000} defaultValues={[0, 3000]} formater="€" results={results} setResults={setResults} data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
+          <FilterSlider name="Score" max={100} defaultValues={[0, 100]} formater="*" data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
+          <FilterSlider name="Price" max={3000} defaultValues={[0, 3000]} formater="€" data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
         </div>
       </div>
       <HideOnScroll {...props}>
@@ -253,13 +249,13 @@ export const SearchPage = (props) => {
                   <img src="/logo.png" alt="logo" />
                 </Link>
               </div>
-              <form className="ml-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent===null ? searchContent : newSearchContent}>
+              <form className="ml-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent}>
                 <SearchIcon className="absolute left-2 text-green-700" />
                 <input
                   type="text"
                   className="w-full px-10 p-2 rounded-full text-black focus:outline-none border border-green-900/20"
                   placeholder="Search for a wine ..."
-                  defaultValue={searchContent}
+                  value={newSearchContent}
                   onChange={(e) => setSearchContent(e.target.value)}
                 />
               </form>
@@ -267,15 +263,12 @@ export const SearchPage = (props) => {
           </div>
         </AppBar>
       </HideOnScroll>
-      <div className="mt-3 ml-64 w-fit">
+      <div className="mt-3 ml-64 w-[46rem]">
         <div className='flex justify-between px-5'>
           <p className='text-green-900/50 text-start flex items-center aligh-middle w-fit'>Found {results.length} wines</p>
           <Select
-            className='flex border-none'
+            className='flex w-24'
             defaultValue="price"
-            style={{
-              width: 120,
-            }}
             onChange={(value) => {console.log(value)}}
             options={[
               {

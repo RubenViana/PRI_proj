@@ -37,26 +37,4 @@
   }
 }
 
-.ant-dropdown-menu-item-selected {
-  background-color: #34D399 !important; 
-  color: white !important;
-}
-.ant-dropdown-menu-item-selected:hover {
-  background-color: #34D399 !important;
-  color: white !important;
-}
-.ant-dropdown-menu{
-  box-shadow: 0 2px 5px 1px #34D399 !important;
-}
 
-.ant-slider-track{
-  background-color: #34D399 !important;
-}
-
-.ant-slider-handle{
-  border-color: #34D399 !important;
-}
-
-.ant-slider-handle:hover::after, .ant-slider-handle:focus::after, .ant-slider-handle:active::after{
-  box-shadow: 0 2px 5px 1px #34D399 !important;
-}
