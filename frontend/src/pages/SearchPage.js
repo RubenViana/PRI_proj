@@ -69,6 +69,13 @@ export const SearchPage = (props) => {
               .flatMap((opt) => opt.selectedLabel);
             return selectedOptions.includes(result.date);;
           }
+          else if (option.filterKey === 'reviewer') {
+            console.log(result.reviewer)
+            const selectedOptions = filtersList
+              .filter((opt) => opt.filterKey === 'reviewer')
+              .flatMap((opt) => opt.selectedLabel);
+            return selectedOptions.includes(result.reviewer);;
+          }
           else if (option.filterKey === 'score') {
             const selectedOptions = filtersList
               .filter((opt) => opt.filterKey === 'score')
@@ -99,7 +106,7 @@ export const SearchPage = (props) => {
   let filters = [
     {
       name: 'Type / Color',
-      values : [
+      values: [
         {
           label: 'Red Sparkling',
           key: '0',
@@ -126,48 +133,84 @@ export const SearchPage = (props) => {
         }
       ]
     },
-    {name: 'Country', values: 
-      [{'label': 'Greece', 'key': '0'},
-      {'label': 'South Africa', 'key': '1'},
-      {'label': 'Austria', 'key': '2'},
-      {'label': 'Italy', 'key': '3'},
-      {'label': 'Portugal', 'key': '4'},
-      {'label': 'Spain', 'key': '5'},
-      {'label': 'Germany', 'key': '6'},
-      {'label': 'New Zealand', 'key': '7'},
-      {'label': 'American', 'key': '8'},
-      {'label': 'Israel', 'key': '9'},
-      {'label': 'Hungary', 'key': '10'},
-      {'label': 'Cyprus', 'key': '11'},
-      {'label': 'France', 'key': '12'},
-      {'label': 'Chile', 'key': '13'},
-      {'label': 'Uruguay', 'key': '14'},
-      {'label': 'Argentina', 'key': '15'},
-      {'label': 'Canada', 'key': '16'},
-      {'label': 'United States', 'key': '17'},
-      {'label': 'Australia', 'key': '18'},
-      {'label': 'New York', 'key': '19'},
-    ]},
+    {
+      name: 'Country / Region', values:
+        [{ 'label': 'Greece', 'key': '0' },
+        { 'label': 'South Africa', 'key': '1' },
+        { 'label': 'Austria', 'key': '2' },
+        { 'label': 'Italy', 'key': '3' },
+        { 'label': 'Portugal', 'key': '4' },
+        { 'label': 'Spain', 'key': '5' },
+        { 'label': 'Germany', 'key': '6' },
+        { 'label': 'New Zealand', 'key': '7' },
+        { 'label': 'American', 'key': '8' },
+        { 'label': 'Israel', 'key': '9' },
+        { 'label': 'Hungary', 'key': '10' },
+        { 'label': 'Cyprus', 'key': '11' },
+        { 'label': 'France', 'key': '12' },
+        { 'label': 'Chile', 'key': '13' },
+        { 'label': 'Uruguay', 'key': '14' },
+        { 'label': 'Argentina', 'key': '15' },
+        { 'label': 'Canada', 'key': '16' },
+        { 'label': 'United States', 'key': '17' },
+        { 'label': 'Australia', 'key': '18' },
+        { 'label': 'New York', 'key': '19' },
+        ]
+    },
 
-    {name: 'Year', values: 
-    [{'label': '2023', 'key': '0'},
-    {'label': '2022', 'key': '1'},
-    {'label': '2021', 'key': '2'},
-    {'label': '2020', 'key': '3'},
-    {'label': '2019', 'key': '4'},
-    {'label': '2018', 'key': '5'},
-    {'label': '2017', 'key': '6'},
-    {'label': '2016', 'key': '7'},
-    {'label': '2015', 'key': '8'},
-    {'label': '2014', 'key': '9'},
-    {'label': '2013', 'key': '10'},
-    {'label': '2012', 'key': '11'},
-    {'label': '2011', 'key': '12'},
-    {'label': '2010', 'key': '13'},
-    {'label': '2009', 'key': '14'},
-    {'label': '2008', 'key': '15'},
-    {'label': '2006', 'key': '16'},
-    {'label': '1975', 'key': '17'},
+    {
+      name: 'Year', values:
+        [{ 'label': '2023', 'key': '0' },
+        { 'label': '2022', 'key': '1' },
+        { 'label': '2021', 'key': '2' },
+        { 'label': '2020', 'key': '3' },
+        { 'label': '2019', 'key': '4' },
+        { 'label': '2018', 'key': '5' },
+        { 'label': '2017', 'key': '6' },
+        { 'label': '2016', 'key': '7' },
+        { 'label': '2015', 'key': '8' },
+        { 'label': '2014', 'key': '9' },
+        { 'label': '2013', 'key': '10' },
+        { 'label': '2012', 'key': '11' },
+        { 'label': '2011', 'key': '12' },
+        { 'label': '2010', 'key': '13' },
+        { 'label': '2009', 'key': '14' },
+        { 'label': '2008', 'key': '15' },
+        { 'label': '2006', 'key': '16' },
+        { 'label': '1975', 'key': '17' },
+        ]
+    },
+
+    {name: 'Reviewer', values:
+    [
+      {
+        "label": "James Molesworth",
+        "key": 0
+      },
+      {
+        "label": "Tim Fish",
+        "key": 1
+      },
+      {
+        "label": "Alison Napjus",
+        "key": 2
+      },
+      {
+        "label": "Bruce Sanderson",
+        "key": 3
+      },
+      {
+        "label": "Kristen Bieler",
+        "key": 4
+      },
+      {
+        "label": "Aaron Romano",
+        "key": 5
+      },
+      {
+        "label": "MaryAnn Worobiec",
+        "key": 6
+      }
     ]},
   ];
 

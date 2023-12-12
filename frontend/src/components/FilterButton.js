@@ -15,8 +15,11 @@ export const FilterButton = (props) => {
   else if (props.name === 'Country') {
     filterKey = 'region';
   }
-  else if (props.name == 'Year') {
+  else if (props.name === 'Year') {
     filterKey = 'date';
+  }
+  else if (props.name === 'Reviewer') {
+    filterKey = 'reviewer';
   }
 
   const handleMenuClick = (e) => {
