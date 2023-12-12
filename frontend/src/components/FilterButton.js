@@ -12,7 +12,7 @@ export const FilterButton = (props) => {
   if (props.name === 'Type / Color') {
     filterKey = 'type_and_color';
   }
-  else if (props.name === 'Country') {
+  else if (props.name === 'Country / Region') {
     filterKey = 'region';
   }
   else if (props.name === 'Year') {
