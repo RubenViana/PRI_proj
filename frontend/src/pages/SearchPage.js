@@ -35,7 +35,6 @@ export const SearchPage = (props) => {
   const [newSearchContent, setSearchContent] = useState(searchContent)
   const [results, setResults] = useState([])
   const [filtersList, setFiltersList] = useState([])
-  const [sortValue, setSortValue] = useState("price")
 
   const data = winesData;
 
@@ -65,7 +64,6 @@ export const SearchPage = (props) => {
             return selectedOptions.includes(result.date);;
           }
           else if (option.filterKey === 'reviewer') {
-            console.log(result.reviewer)
             const selectedOptions = filtersList
               .filter((opt) => opt.filterKey === 'reviewer')
               .flatMap((opt) => opt.selectedLabel);
@@ -218,13 +216,13 @@ export const SearchPage = (props) => {
   return (
     <div>
       <div className="bg-white border-b border-green-900/20">
-        <div className="flex">
-          <div className="flex w-32 items-center">
+        <div className="flex h-20">
+          <div className="w-32">
             <Link to="/">
               <img src="/logo.png" alt="logo" />
             </Link>
           </div>
-          <form className="ml-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent}>
+          <form className="mx-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent}>
             <SearchIcon className="absolute left-2 text-green-700" />
             <input
               className="w-full px-10 p-3 rounded-full text-black focus:outline-none shadow-[0_2px_5px_1px] shadow-green-900/20"
@@ -234,7 +232,7 @@ export const SearchPage = (props) => {
             />
           </form>
         </div>
-        <div id="filters" className="ml-64 h-16 flex space-x-4">
+        <div id="filters" className="mx-32 md:ml-64 my-4 flex space-x-4 flex-wrap">
           {filters.map((filter) => (
             <FilterButton id={filter.name} name={filter.name} items={filter.values} data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
           ))}
@@ -251,7 +249,7 @@ export const SearchPage = (props) => {
                   <img src="/logo.png" alt="logo" />
                 </Link>
               </div>
-              <form className="ml-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent}>
+              <form className="mx-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent}>
                 <SearchIcon className="absolute left-2 text-green-700" />
                 <input
                   type="text"
