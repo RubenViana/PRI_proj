@@ -50,13 +50,10 @@
                     "class":"solr.StandardTokenizerFactory"
                 },
                 "filters":[
-                    {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
                     {"class":"solr.LowerCaseFilterFactory"},
                     {"class":"solr.EnglishMinimalStemFilterFactory"},
-                    {"class":"solr.PorterStemFilterFactory"},
-                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
-                    {"class":"solr.FlattenGraphFilterFactory"}
+                    {"class":"solr.PorterStemFilterFactory"}
                 ]
             },
             "queryAnalyzer":{
@@ -64,12 +61,10 @@
                     "class":"solr.StandardTokenizerFactory"
                 },
                 "filters":[
-                    {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
                     {"class":"solr.LowerCaseFilterFactory"},
                     {"class":"solr.EnglishMinimalStemFilterFactory"},
-                    {"class":"solr.PorterStemFilterFactory"},
-                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"}
+                    {"class":"solr.PorterStemFilterFactory"}
                 ]
             }
         }

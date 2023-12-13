@@ -5,10 +5,10 @@ import os
 QRELS_FILE = "./q3/qrels.txt"
 
 query = {
-    "sys1" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%20AND%20primary_grape%3A%20noir)&rows=20",
-    "sys2" : "http://localhost:8983/solr/wines/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%20AND%20primary_grape%3A%20noir)%5E4&rows=20",
-    "sys3" : "http://localhost:8983/solr/wines_filterless/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%20AND%20primary_grape%3A%20noir)&rows=20",
-    "sys4" : "http://localhost:8983/solr/wines_filterless/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%20AND%20primary_grape%3A%20noir)%5E4&rows=20"
+    "sys1" : "http://localhost:8983/solr/wines_subset/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%0AAND%20primary_grape%3A%20noir)&rows=10&useParams=",
+    "sys2" : "http://localhost:8983/solr/wines_subset/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%0AAND%20primary_grape%3A%20noir)%5E4&rows=10&useParams=",
+    "sys3" : "http://localhost:8983/solr/wines_simple_schema_subset/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%0AAND%20primary_grape%3A%20noir)&rows=10&useParams=",
+    "sys4" : "http://localhost:8983/solr/wines_simple_schema_subset/select?defType=lucene&indent=true&q.op=OR&q=(review%3A%20pinot%20AND%20review%3A%20noir)%20(primary_grape%3A%20pinot%0AAND%20primary_grape%3A%20noir)%5E4&rows=10&useParams="
 }
 
 relevant = list(map(lambda el: el.strip(), open(QRELS_FILE).readlines()))

@@ -1,3 +1,4 @@
 elegant,balanced,harmonious,refined,subtle,graceful
 powerful,pungent,intense,potent,muscular,strong,sturdy
-sleek,smooth,glossy,polished,seamless,soft,supple
+sleek,smooth,glossy,polished,seamless,soft,supple,velvety,plush
+flavors, notes
