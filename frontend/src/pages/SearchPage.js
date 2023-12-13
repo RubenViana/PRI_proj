@@ -8,7 +8,7 @@ import { useState } from "react";
 import { FilterButton } from "../components/FilterButton";
 import { WineCard } from '../components/WineCard';
 import { FilterSlider } from '../components/FilterSlider';
-import { Pagination, Select } from 'antd';
+import { Pagination } from 'antd';
 
 import filters from '../data/filters.json';
 
@@ -101,15 +101,17 @@ export const SearchPage = (props) => {
         setData([]);
     }
     else {
-      // makeSolrQuery('http://localhost:5000/api/solr_knn_query', 'wines_semantic', newSearchContent)
-      //   .then((result) => {
-      //     setResults(result.response.docs)
-      //   });
-      makeSolrQuery('http://localhost:5000/api/solr_query', 'wines_semantic', newSearchContent)
-        .then((result) => {
-          setResults(result.response.docs);
-          setData(result.response.docs);
-        });
+      makeSolrQuery('http://localhost:5000/api/solr_knn_query', 'wines_semantic', newSearchContent)
+         .then((result) => {
+           setResults(result.response.docs)
+           setData(result.response.docs)
+           console.log(result.response.docs)
+         });
+      //makeSolrQuery('http://localhost:5000/api/solr_query', 'wines_semantic', newSearchContent)
+      //  .then((result) => {
+      //    setResults(result.response.docs);
+      //    setData(result.response.docs);
+      //  });
     }
   }, [newSearchContent])
 
