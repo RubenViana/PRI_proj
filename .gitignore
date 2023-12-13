@@ -1,0 +1,6 @@
+.vscode/
+data/extract.py
+data/formatted_values.json
+node_modules/
+package-lock.json
+package.json
