@@ -9,7 +9,8 @@ import { FilterButton } from "../components/FilterButton";
 import { WineCard } from '../components/WineCard';
 import { FilterSlider } from '../components/FilterSlider';
 import { Pagination, Select } from 'antd';
-import  winesData from '../data/wines.json';
+
+import filters from '../data/filters.json';
 
 
 function HideOnScroll(props) {
@@ -33,10 +34,10 @@ function HideOnScroll(props) {
 export const SearchPage = (props) => {
   const { searchContent } = useParams();
   const [newSearchContent, setSearchContent] = useState(searchContent)
+  const [data, setData] = useState([])
   const [results, setResults] = useState([])
   const [filtersList, setFiltersList] = useState([])
 
-  const data = winesData;
 
   const filterResults = React.useCallback(() => {
     // Implement the common filter logic here
@@ -61,7 +62,7 @@ export const SearchPage = (props) => {
             const selectedOptions = filtersList
               .filter((opt) => opt.filterKey === 'date')
               .flatMap((opt) => opt.selectedLabel);
-            return selectedOptions.includes(result.date);;
+            return selectedOptions.includes(result.date[0]);;
           }
           else if (option.filterKey === 'reviewer') {
             const selectedOptions = filtersList
@@ -88,122 +89,30 @@ export const SearchPage = (props) => {
       });
       setResults(filteredResults);
     }
-  }, [data, filtersList]);
+  }, [filtersList, data]);
 
   React.useEffect(() => {
     filterResults()
   }, [filtersList])
 
-  let filters = [
-    {
-      name: 'Type / Color',
-      values: [
-        {
-          label: 'Red Sparkling',
-          key: '0',
-        },
-        {
-          label: 'Red Dessert',
-          key: '1',
-        },
-        {
-          label: 'Red Still',
-          key: '2',
-        },
-        {
-          label: 'White Sparkling',
-          key: '3',
-        },
-        {
-          label: 'White Dessert',
-          key: '4',
-        },
-        {
-          label: 'White Still',
-          key: '5',
-        }
-      ]
-    },
-    {
-      name: 'Country / Region', values:
-        [{ 'label': 'Greece', 'key': '0' },
-        { 'label': 'South Africa', 'key': '1' },
-        { 'label': 'Austria', 'key': '2' },
-        { 'label': 'Italy', 'key': '3' },
-        { 'label': 'Portugal', 'key': '4' },
-        { 'label': 'Spain', 'key': '5' },
-        { 'label': 'Germany', 'key': '6' },
-        { 'label': 'New Zealand', 'key': '7' },
-        { 'label': 'American', 'key': '8' },
-        { 'label': 'Israel', 'key': '9' },
-        { 'label': 'Hungary', 'key': '10' },
-        { 'label': 'Cyprus', 'key': '11' },
-        { 'label': 'France', 'key': '12' },
-        { 'label': 'Chile', 'key': '13' },
-        { 'label': 'Uruguay', 'key': '14' },
-        { 'label': 'Argentina', 'key': '15' },
-        { 'label': 'Canada', 'key': '16' },
-        { 'label': 'United States', 'key': '17' },
-        { 'label': 'Australia', 'key': '18' },
-        { 'label': 'New York', 'key': '19' },
-        ]
-    },
+  React.useEffect(() => {
+    if (newSearchContent === "") {
+        setResults([]);
+        setData([]);
+    }
+    else {
+      // makeSolrQuery('http://localhost:5000/api/solr_knn_query', 'wines_semantic', newSearchContent)
+      //   .then((result) => {
+      //     setResults(result.response.docs)
+      //   });
+      makeSolrQuery('http://localhost:5000/api/solr_query', 'wines_semantic', newSearchContent)
+        .then((result) => {
+          setResults(result.response.docs);
+          setData(result.response.docs);
+        });
+    }
+  }, [newSearchContent])
 
-    {
-      name: 'Year', values:
-        [{ 'label': '2023', 'key': '0' },
-        { 'label': '2022', 'key': '1' },
-        { 'label': '2021', 'key': '2' },
-        { 'label': '2020', 'key': '3' },
-        { 'label': '2019', 'key': '4' },
-        { 'label': '2018', 'key': '5' },
-        { 'label': '2017', 'key': '6' },
-        { 'label': '2016', 'key': '7' },
-        { 'label': '2015', 'key': '8' },
-        { 'label': '2014', 'key': '9' },
-        { 'label': '2013', 'key': '10' },
-        { 'label': '2012', 'key': '11' },
-        { 'label': '2011', 'key': '12' },
-        { 'label': '2010', 'key': '13' },
-        { 'label': '2009', 'key': '14' },
-        { 'label': '2008', 'key': '15' },
-        { 'label': '2006', 'key': '16' },
-        { 'label': '1975', 'key': '17' },
-        ]
-    },
-
-    {name: 'Reviewer', values:
-    [
-      {
-        "label": "James Molesworth",
-        "key": 0
-      },
-      {
-        "label": "Tim Fish",
-        "key": 1
-      },
-      {
-        "label": "Alison Napjus",
-        "key": 2
-      },
-      {
-        "label": "Bruce Sanderson",
-        "key": 3
-      },
-      {
-        "label": "Kristen Bieler",
-        "key": 4
-      },
-      {
-        "label": "Aaron Romano",
-        "key": 5
-      },
-      {
-        "label": "MaryAnn Worobiec",
-        "key": 6
-      }
-    ]},
-  ];
 
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -222,7 +131,7 @@ export const SearchPage = (props) => {
               <img src="/logo.png" alt="logo" />
             </Link>
           </div>
-          <form className="mx-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent}>
+          <form className="mx-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent} onSubmit={(e) => {if (!newSearchContent) {e.preventDefault();}}}>
             <SearchIcon className="absolute left-2 text-green-700" />
             <input
               className="w-full px-10 p-3 rounded-full text-black focus:outline-none shadow-[0_2px_5px_1px] shadow-green-900/20"
@@ -234,10 +143,10 @@ export const SearchPage = (props) => {
         </div>
         <div id="filters" className="mx-32 md:ml-64 my-4 flex space-x-4 flex-wrap">
           {filters.map((filter) => (
-            <FilterButton id={filter.name} name={filter.name} items={filter.values} data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
+            <FilterButton id={filter.name} name={filter.name} items={filter.values} filtersList={filtersList} setFiltersList={setFiltersList}/>
           ))}
-          <FilterSlider name="Score" max={100} defaultValues={[0, 100]} formater="*" data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
-          <FilterSlider name="Price" max={3000} defaultValues={[0, 3000]} formater="€" data={data} filtersList={filtersList} setFiltersList={setFiltersList}/>
+          <FilterSlider name="Score" max={100} defaultValues={[0, 100]} formater="*" filtersList={filtersList} setFiltersList={setFiltersList}/>
+          <FilterSlider name="Price" max={3000} defaultValues={[0, 3000]} formater="€" filtersList={filtersList} setFiltersList={setFiltersList}/>
         </div>
       </div>
       <HideOnScroll {...props}>
@@ -277,3 +186,30 @@ export const SearchPage = (props) => {
     </div>
   );
 }
+
+
+// Solr query
+const makeSolrQuery = async (endpoint, collection, text) => {
+  try {
+    
+      const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              "collection": collection,
+              "text": text,
+          }),
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+  } catch (error) {
+      console.error('Error:', error.message);
+  }
+};
