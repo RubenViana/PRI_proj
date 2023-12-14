@@ -21,13 +21,19 @@ def solr_knn_query():
     embedding = model.encode(text, convert_to_tensor=False).tolist()
     embedding_str = "[" + ",".join(map(str, embedding)) + "]"
 
+    search_query = "name:" + text + " winery:" + text + " region:" + text + " type_and_color:" + text + " review:" + text + " reviewer:" + text
+
     # Perform Solr KNN query
     url = f"{endpoint}/{collection}/select"
 
+    semantic_search = "{!knn f=vector topK=100}" + embedding_str
+    query = search_query + " " + semantic_search
+
     solr_data = {
-        "q": f"{{!knn f=vector topK=100}}{embedding_str}",
+        "q": query,
         "wt": "json",
-        "rows": 5000
+        "q.op": "OR",
+        "rows": 200
     }
 
     headers = {
@@ -38,9 +44,22 @@ def solr_knn_query():
         response = requests.post(url, data=solr_data, headers=headers)
         response.raise_for_status()
         
-        # logging.debug(response.json())
+        result = [
+            {
+                "wine_id": item["wine_id"],
+                "name": item["name"],
+                "winery": item["winery"],
+                "region": item["region"],
+                "type_and_color": item["type_and_color"],
+                "review": item["review"],
+                "reviewer": item["reviewer"],
+                "price": item["price"],
+                "score": item["score"]
+            }
+            for item in response.json()["response"]["docs"]
+        ]
 
-        return (response.json())
+        return (result)
     except requests.HTTPError as e:
         return jsonify({"error": f"Error {e.response.status_code}: {e.response.text}"}), 500
 
@@ -84,7 +103,6 @@ def suggest():
 
     solr_data = {
         "q": text,
-        "rows": 5,
         "wt": "json",
     }
 

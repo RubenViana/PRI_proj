@@ -103,8 +103,8 @@ export const SearchPage = (props) => {
     else {
       makeSolrQuery('http://localhost:5000/api/solr_knn_query', 'wines_semantic', newSearchContent)
          .then((result) => {
-           setResults(result.response.docs)
-           setData(result.response.docs)
+           setResults(result)
+           setData(result)
          });
       // makeSolrQuery('http://localhost:5000/api/solr_query', 'wines_semantic', newSearchContent)
       //  .then((result) => {

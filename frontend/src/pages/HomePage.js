@@ -21,7 +21,7 @@ export const HomePage = () => {
                   options={options}
                   value={searchContent}
                   onSelect={(text) => setSearchContent(text)}
-                  onSearch={(text) => {(makeSolrSuggest('http://localhost:5000/api/suggest', 'wines_semantic', text).then((result) => {setOptions(result); setOptions(result)}))}}
+                  onSearch={(text) => {(makeSolrSuggest('http://localhost:5000/api/suggest', 'wines_semantic', text).then((result) => setOptions(result)))}}
                 >
                   <input
                     className="w-full px-5 p-3 rounded-full text-lg text-black shadow-[0_2px_5px_1px] shadow-green-900 focus:outline-none"
