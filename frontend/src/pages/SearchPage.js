@@ -105,9 +105,8 @@ export const SearchPage = (props) => {
          .then((result) => {
            setResults(result.response.docs)
            setData(result.response.docs)
-           console.log(result.response.docs)
          });
-      //makeSolrQuery('http://localhost:5000/api/solr_query', 'wines_semantic', newSearchContent)
+      // makeSolrQuery('http://localhost:5000/api/solr_query', 'wines_semantic', newSearchContent)
       //  .then((result) => {
       //    setResults(result.response.docs);
       //    setData(result.response.docs);
@@ -160,7 +159,7 @@ export const SearchPage = (props) => {
                   <img src="/logo.png" alt="logo" />
                 </Link>
               </div>
-              <form className="mx-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent}>
+              <form className="mx-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent} onSubmit={(e) => {if (!newSearchContent) {e.preventDefault();}}}>
                 <SearchIcon className="absolute left-2 text-green-700" />
                 <input
                   type="text"

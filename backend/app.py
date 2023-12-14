@@ -9,6 +9,7 @@ logging.basicConfig(level=logging.DEBUG)
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route('/api/solr_knn_query', methods=['POST'])
 def solr_knn_query():
     data = request.get_json()
@@ -38,7 +39,7 @@ def solr_knn_query():
         response = requests.post(url, data=solr_data, headers=headers)
         response.raise_for_status()
         
-        logging.debug(response.json())
+        # logging.debug(response.json())
 
         return (response.json())
     except requests.HTTPError as e:
@@ -56,8 +57,9 @@ def solr_query():
     url = f"{endpoint}/{collection}/query"
 
     solr_data = {
-        "q": "name:" + text,
+        "q": "name:" + text + " winery:" + text + " region:" + text + " type_and_color:" + text, #+ " price:" + [text] + " score:" + [text],
         "wt": "json",
+        "q.op": "OR",
         "rows": 5000
     }
 
@@ -73,4 +75,5 @@ def solr_query():
         return jsonify({"error": f"Error {e.response.status_code}: {e.response.text}"}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 
+
