@@ -10,12 +10,11 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/api/solr_knn_query', methods=['POST'])
+@app.route('/api/solr_knn_query', methods=['GET'])
 def solr_knn_query():
-    data = request.get_json()
+    collection = request.args.get('collection')
+    text = request.args.get('text')
     endpoint = "http://localhost:8983/solr"
-    collection = data['collection']
-    text = data['text']
 
     # Convert text to embedding
     model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -46,11 +45,10 @@ def solr_knn_query():
         return jsonify({"error": f"Error {e.response.status_code}: {e.response.text}"}), 500
 
 
-@app.route('/api/solr_query', methods=['POST'])
+@app.route('/api/solr_query', methods=['GET'])
 def solr_query():
-    data = request.get_json()
-    collection = data['collection']
-    text = data['text']
+    collection = request.args.get('collection')
+    text = request.args.get('text')
     endpoint = "http://localhost:8983/solr"
 
     # Perform Solr query

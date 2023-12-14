@@ -118,7 +118,6 @@ export const SearchPage = (props) => {
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 20;
-
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const paginatedResults = results.slice(startIndex, endIndex);
@@ -192,16 +191,20 @@ export const SearchPage = (props) => {
 // Solr query
 const makeSolrQuery = async (endpoint, collection, text) => {
   try {
-    
-      const response = await fetch(endpoint, {
-          method: 'POST',
+      // Construct the query parameters
+      const queryParams = new URLSearchParams({
+          collection: collection,
+          text: text,
+      });
+
+      // Append the query parameters to the endpoint URL
+      const urlWithParams = `${endpoint}?${queryParams.toString()}`;
+
+      const response = await fetch(urlWithParams, {
+          method: 'GET',
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-              "collection": collection,
-              "text": text,
-          }),
       });
 
       if (!response.ok) {
