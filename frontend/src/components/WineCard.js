@@ -15,7 +15,7 @@ export const WineCard = (props) => {
         </div>
         <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
           <p className="text-sm font-semibold leading-6 text-gray-900">{props.wine.price} €</p>
-          <p className="mt-1 text-xs leading-5 text-gray-500"><Rating name="" precision="0.5" value={props.wine.score/20.0} readOnly /></p>
+          <p className="mt-1 text-xs leading-5 text-gray-500"><Rating name="" precision={0.5} value={props.wine.score/20.0} readOnly /></p>
         </div>
       </li>
     </Link>

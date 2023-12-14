@@ -38,7 +38,7 @@ export const FilterSlider = (props) => {
               range
               max={props.max}
               defaultValue={props.defaultValues}
-              tipFormatter={value => `${value}` + props.formater}
+              formatter={value => `${value}` + props.formater}
               marks={
                 {
                   0: '0' + props.formater,

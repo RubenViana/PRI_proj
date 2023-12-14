@@ -52,11 +52,11 @@
                 "filters":[
                     {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
+                    {"class":"solr.FlattenGraphFilterFactory"},
                     {"class":"solr.LowerCaseFilterFactory"},
                     {"class":"solr.EnglishMinimalStemFilterFactory"},
-                    {"class":"solr.PorterStemFilterFactory"},
-                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
-                    {"class":"solr.FlattenGraphFilterFactory"}
+                    {"class":"solr.PorterStemFilterFactory"}
                 ]
             },
             "queryAnalyzer":{
@@ -66,10 +66,10 @@
                 "filters":[
                     {"class":"solr.StopFilterFactory", "ignoreCase":"true", "words":"stopwords.txt"},
                     {"class":"solr.ASCIIFoldingFilterFactory", "preserveOriginal":true},
+                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"},
                     {"class":"solr.LowerCaseFilterFactory"},
                     {"class":"solr.EnglishMinimalStemFilterFactory"},
-                    {"class":"solr.PorterStemFilterFactory"},
-                    {"class":"solr.SynonymGraphFilterFactory", "synonyms":"synonyms.txt", "ignoreCase":"true"}
+                    {"class":"solr.PorterStemFilterFactory"}
                 ]
             }
         },
@@ -142,7 +142,17 @@
             "type": "courseVector",
             "indexed": true,
             "stored": true
+        },
+        {
+            "name": "name_suggest",
+            "type": "basicText",
+            "indexed": true,
+            "stored": true
         }
 
-    ]
+    ],
+    "add-copy-field": {
+        "source": "name",
+        "dest": "name_suggest"
+    }
 }

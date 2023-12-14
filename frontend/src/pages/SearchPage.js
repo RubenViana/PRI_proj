@@ -8,7 +8,7 @@ import { useState } from "react";
 import { FilterButton } from "../components/FilterButton";
 import { WineCard } from '../components/WineCard';
 import { FilterSlider } from '../components/FilterSlider';
-import { Pagination } from 'antd';
+import { AutoComplete, Pagination } from 'antd';
 
 import filters from '../data/filters.json';
 
@@ -122,6 +122,9 @@ export const SearchPage = (props) => {
   const endIndex = startIndex + pageSize;
   const paginatedResults = results.slice(startIndex, endIndex);
 
+  // autocomplete-suggester
+  const [options, setOptions] = useState([]);
+
   return (
     <div>
       <div className="bg-white border-b border-green-900/20">
@@ -131,14 +134,24 @@ export const SearchPage = (props) => {
               <img src="/logo.png" alt="logo" />
             </Link>
           </div>
-          <form className="mx-32 w-[60rem] rounded-full relative flex items-center" action={"/search/" + newSearchContent || searchContent} onSubmit={(e) => {if (!newSearchContent) {e.preventDefault();}}}>
-            <SearchIcon className="absolute left-2 text-green-700" />
-            <input
-              className="w-full px-10 p-3 rounded-full text-black focus:outline-none shadow-[0_2px_5px_1px] shadow-green-900/20"
-              placeholder="Search for a wine ..."
-              value={newSearchContent}
-              onChange={(e) => setSearchContent(e.target.value)}
-            />
+          <form className="mx-32 w-[60rem] rounded-full flex items-center" action={"/search/" + newSearchContent || searchContent} onSubmit={(e) => {if (!newSearchContent) {e.preventDefault();}}}>
+            <div className="flex-grow relative">
+              <AutoComplete
+                className="w-full"
+                options={options}
+                value={newSearchContent}
+                onSelect={(text) => setSearchContent(text)}
+                onSearch={(text) => {(makeSolrSuggest('http://localhost:5000/api/suggest', 'wines_semantic', text).then((result) => {setOptions(result); setOptions(result)}))}}
+              >
+                <input
+                  className="w-full px-5 p-3 rounded-full text-base text-black shadow-[0_2px_5px_1px] shadow-green-900/20 focus:outline-none"
+                  placeholder="Search for a wine ..."
+                  value={newSearchContent}
+                  onChange={(e) => setSearchContent(e.target.value)}
+                />
+              </AutoComplete>
+              <SearchIcon className="absolute right-3 top-4 text-green-700" />
+            </div>
           </form>
         </div>
         <div id="filters" className="mx-32 md:ml-64 my-4 flex space-x-4 flex-wrap">
@@ -217,3 +230,34 @@ const makeSolrQuery = async (endpoint, collection, text) => {
       console.error('Error:', error.message);
   }
 };
+
+// Solr suggest
+const makeSolrSuggest = async (endpoint, collection, text) => {
+  try {
+      // Construct the query parameters
+      const queryParams = new URLSearchParams({
+          collection: collection,
+          text: text,
+      });
+
+      // Append the query parameters to the endpoint URL
+      const urlWithParams = `${endpoint}?${queryParams.toString()}`;
+
+      const response = await fetch(urlWithParams, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+  } catch (error) {
+      console.error('Error:', error.message);
+  }
+};
+
