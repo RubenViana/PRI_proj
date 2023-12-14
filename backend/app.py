@@ -54,7 +54,8 @@ def solr_knn_query():
                 "review": item["review"],
                 "reviewer": item["reviewer"],
                 "price": item["price"],
-                "score": item["score"]
+                "score": item["score"],
+                "date": item["date"],
             }
             for item in response.json()["response"]["docs"]
         ]
